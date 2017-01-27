@@ -3,21 +3,66 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Account</ion-title>
+    <ion-title>User Profile</ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content class="outer-content">
-  <div padding-top text-center *ngIf="username">
-    <img src="http://www.gravatar.com/avatar?d=mm&s=140" alt="avatar">
-    <h2>{{username}}</h2>
+<ion-content class="outer-content" style="background-color: #f4f4f4;">
+  <div padding-top text-center *ngFor="let data2 of data1">
+    <img (click)="updatePicture()" [src]="data2.userpic" alt="profile pic">
+    <h2>{{data2.fname}} {{data2.lname}}</h2>
+    <p style="font-weight: 200;font-size: smaller;">Click on any informaiton to edit</p>
 
-    <ion-list inset>
-      <button ion-item (click)="updatePicture()">Update Picture</button>
-      <button ion-item (click)="changeUsername()">Change Username</button>
-      <button ion-item (click)="changePassword()">Change Password</button>
-      <button ion-item (click)="support()">Support</button>
-      <button ion-item (click)="logout()">Logout</button>
-    </ion-list>
+    
+  <div *ngIf="data2.gender == 'm'">
+     <ion-card>
+  <ion-card-header>
+    Gender
+  </ion-card-header>
+  
+  <ion-card-content>
+    <h4>Male</h4>
+  </ion-card-content>
+
+</ion-card>
+  </div>
+  <div *ngIf="data2.gender == 'f'">
+  <ion-card>
+  <ion-card-header>
+    Gender
+  </ion-card-header>
+  
+  <ion-card-content>
+    <h4>Female</h4>
+  </ion-card-content>
+
+</ion-card>
+  </div>
+    <ion-card>
+  <ion-card-header>
+    Email
+  </ion-card-header>
+  <ion-card-content>
+    <h4 (click)="changeUsername()">{{data2.email}}</h4>
+  </ion-card-content>
+</ion-card>
+  <ion-card>
+  <ion-card-header>
+    Mobile
+  </ion-card-header>
+  <ion-card-content>
+    <h4 (click)="changeMobile(data2)">{{data2.mobile}}</h4>
+  </ion-card-content>
+</ion-card>
+
+  <ion-card>
+  <ion-card-header>
+    Address
+  </ion-card-header>
+  <ion-card-content>
+    <h4 (click)="changeUsername()">{{data2.address}}</h4>
+  </ion-card-content>
+</ion-card>
+
   </div>
 </ion-content>

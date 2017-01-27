@@ -1,84 +1,83 @@
 <ion-header>
-  <ion-navbar no-border-bottom>
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
+    <ion-navbar no-border-bottom>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-segment [(ngModel)]="segment" (ionChange)="getUsername()">
+            <ion-segment-button value="opendoors">Open Doors</ion-segment-button>
+            <ion-segment-button value="closedoors">Closed Doors</ion-segment-button>
+        </ion-segment> 
 
-    <ion-segment [(ngModel)]="segment" (ionChange)="updateSchedule()">
-      <ion-segment-button value="all">
-        All
-      </ion-segment-button>
-      <ion-segment-button value="favorites">
-        Favorites
-      </ion-segment-button>
-    </ion-segment>
+        <ion-buttons end>
+            <button ion-button icon-only (click)="settings()">
+                <!-- <ion-icon ios="ios-key" md="md-key"></ion-icon>  -->
+                <img src="assets/img/door.png" alt="door logo" style="border-radius:20%">
+                <!-- <p>My Door</p> -->
+            </button>
+        </ion-buttons>
+    </ion-navbar>
 
-    <ion-buttons end>
-      <button ion-button icon-only (click)="presentFilter()">
-        <ion-icon ios="ios-options-outline" md="md-options"></ion-icon>
-      </button>
-    </ion-buttons>
-  </ion-navbar>
-
-  <ion-toolbar no-border-top>
-    <ion-searchbar color="primary"
-                   [(ngModel)]="queryText"
-                   (ionInput)="updateSchedule()"
-                   placeholder="Search">
-    </ion-searchbar>
-  </ion-toolbar>
+    <ion-toolbar no-border-top>
+        <!-- <ion-searchbar (ionInput)="getItems($event)" [(ngModel)]="searchQuery"></ion-searchbar> -->
+        <!-- Working Search with modal like list  setFilteredItems() --> 
+        <ion-searchbar color="primary" [(ngModel)]="searchQuery" (ionInput)="getItems($event)" placeholder="Search"></ion-searchbar>
+        <!-- <ion-list [hidden]="searchQuery == ''" *ngIf="data2 && data2.length > '0'">
+        <ion-item *ngFor="let item of data2">  data2 of data1
+        {{item.fname}}
+        </ion-item>
+        </ion-list> -->
+    </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-list #scheduleList [hidden]="shownSessions === 0">
+    <div [ngSwitch]="segment">
+        <div *ngIf="data1 && data1.length > '0'">
+            <ion-list *ngSwitchCase="'opendoors'">
+                <div *ngFor="let item of data2">
+                    <ion-item *ngIf="item.door_status == '0'">
+                        <ion-avatar item-left (click)="goToSpeakerDetail(item)">
+                            <img src="{{item.userpic}}">
+                        </ion-avatar>
+                        <ion-avatar item-right (click)="doConfirm(item)" *ngIf="item.knocked == '0'">
+                            <img src="assets/img/door.png" alt="door logo" style="border-radius:20%">
+                            <span>
+                                <p style="font-style: italic;font-size: x-small;">{{item.doortime | date:'shortDate'}}</p>
+                            </span>
+                        </ion-avatar>   
+                        <ion-avatar item-right *ngIf="item.knocked == '1'">
+                            <ion-icon name="checkmark-circle" color="danger"></ion-icon>
+                            <!-- <img src="assets/img/doorclosed.png" alt="door logo" style="border-radius:20%"> -->
+                            <span>
+                                <p style="font-style: italic;font-size: x-small;">Door knocked!</p>
+                            </span>
+                        </ion-avatar>
 
-    <ion-item-group *ngFor="let group of groups" [hidden]="group.hide">
+                        <h3>{{item.fname}} {{item.lname}}</h3>
+                        <p style="font-style: italic;font-size: x-small;">{{item.status}}</p>
+                    </ion-item>
+                </div>
+            </ion-list>
 
-      <ion-item-divider sticky>
-        <ion-label>
-          {{group.time}}
-        </ion-label>
-      </ion-item-divider>
-
-      <ion-item-sliding *ngFor="let session of group.sessions" #slidingItem [attr.track]="session.tracks[0] | lowercase" [hidden]="session.hide">
-
-        <button ion-item (click)="goToSessionDetail(session)">
-          <h3>{{session.name}}</h3>
-          <p>
-            {{session.timeStart}} &mdash;
-            {{session.timeEnd}}:
-            {{session.location}}
-          </p>
-        </button>
-
-        <ion-item-options>
-          <button ion-button color="favorite" (click)="addFavorite(slidingItem, session)" *ngIf="segment === 'all'">
-            Favorite
-          </button>
-          <button ion-button color="danger" (click)="removeFavorite(slidingItem, session, 'Remove Favorite')" *ngIf="segment === 'favorites'">
-            Remove
-          </button>
-        </ion-item-options>
-
-      </ion-item-sliding>
-
-    </ion-item-group>
-
-  </ion-list>
-
-  <ion-list-header [hidden]="shownSessions > 0">
-      No Sessions Found
-  </ion-list-header>
-
-  <ion-fab bottom right #fab>
-    <button ion-fab><ion-icon name="share"></ion-icon></button>
-    <ion-fab-list side="top">
-      <button ion-fab color="vimeo" (click)="openSocial('Vimeo', fab)"><ion-icon name="logo-vimeo"></ion-icon></button>
-      <button ion-fab color="google" (click)="openSocial('Google+', fab)"><ion-icon name="logo-googleplus"></ion-icon></button>
-      <button ion-fab color="twitter" (click)="openSocial('Twitter', fab)"><ion-icon name="logo-twitter"></ion-icon></button>
-      <button ion-fab color="facebook" (click)="openSocial('Facebook', fab)"><ion-icon name="logo-facebook"></ion-icon></button>
-    </ion-fab-list>
-  </ion-fab>
-
-
+            <ion-list *ngSwitchCase="'closedoors'">
+                <div *ngFor="let item of data2">
+                    <ion-item *ngIf="item.door_status == '1'">
+                        <ion-avatar item-left (click)="goToSpeakerDetail(item)">
+                            <img src="{{item.userpic}}">
+                        </ion-avatar>
+                        <ion-avatar item-right>
+                            <img src="assets/img/doorclosed.png" alt="ionic logo">
+                            <span>
+                            <p style="font-style: italic;font-size: x-small;">{{item.doortime}}</p>
+                            </span>
+                        </ion-avatar> 
+                        <h3>{{item.fname}} {{item.lname}}</h3>
+                    </ion-item>
+                </div>
+            </ion-list>
+        </div>
+        <div *ngIf="data1 && data1.length == '0'" text-center>
+            <p>You have no friends!</p>
+            <button ion-button (click)="contactspage()">Add new friends</button>
+        </div>
+    </div>
 </ion-content>

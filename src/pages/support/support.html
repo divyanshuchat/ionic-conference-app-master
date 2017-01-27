@@ -10,25 +10,37 @@
 </ion-header>
 
 
-<ion-content>
-	<div class="logo">
-		<img src="assets/img/appicon.svg" alt="Ionic Logo">
+<ion-content style="background-color: #f4f4f4;">
+	<div class="profle">
+		<img src="assets/img/appicon.png" alt="Ionic Logo">
 	</div>
 
-	<form #submitForm="ngForm" novalidate (ngSubmit)="submit(submitForm)">
-		<ion-list no-lines>
-			<ion-item>
-				<ion-label stacked color="primary">Enter your support message below</ion-label>
-				<ion-textarea [(ngModel)]="supportMessage" name="supportQuestion" #supportQuestion="ngModel" rows="6" required></ion-textarea>
-			</ion-item>
-		</ion-list>
+	<p style="padding-left: 12px;padding-right: 12px;font-weight: 200;">Contact Us for any question or support now!</p>
 
-		<p ion-text [hidden]="supportQuestion.valid || submitted === false" color="danger" padding-left>
-			Support message is required
-		</p>
 
-		<div padding>
-			<button ion-button block type="submit">Submit</button>
-		</div>
-	</form>
+  <ion-card>
+
+  <ion-card-header>
+    Support Email	
+  </ion-card-header>
+
+  <ion-card-content>
+    support@knockknockapp.com
+  </ion-card-content>
+
+	</ion-card>
+
+
+	<ion-card>
+
+  <ion-card-header>
+    Support Phone	
+  </ion-card-header>
+
+  <ion-card-content>
+    Support Phone Number here
+  </ion-card-content>
+
+	</ion-card>
+
 </ion-content>

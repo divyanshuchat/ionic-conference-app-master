@@ -1,25 +1,32 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>{{speaker.name}}</ion-title>
+    <ion-title>Contacts</ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding class="speaker-detail">
+<ion-content padding >
 
-  <div text-center>
-    <img [src]="speaker.profilePic" [alt]="speaker.name"><br>
 
-    <button ion-button icon-only clear small color="twitter">
-      <ion-icon name="logo-twitter"></ion-icon>
-    </button>
-    <button ion-button icon-only clear small color="github">
-      <ion-icon name="logo-github"></ion-icon>
-    </button>
-    <button ion-button icon-only clear small color="instagram">
-      <ion-icon name="logo-instagram"></ion-icon>
-    </button>
-  </div>
 
-  <p>{{speaker.about}}</p>
+  <div text-center class="profile" >
+    <ion-avatar text-center class="speaker-detail img"><img [src]="speaker.userpic"></ion-avatar><br>
+    <h1 style=" color: white; font-weight: 400;">{{speaker.fname}} {{speaker.lname}}</h1>
+    </div>
+
+    <ion-grid text-center>
+  <ion-row>
+    <ion-col width-50><ion-icon name="bookmark" color="primary" style="font-size: -webkit-xxx-large;"></ion-icon>
+    <p>Add To Favourites</p></ion-col>
+<ion-col width-50><ion-icon name="ios-people" color="primary" style="font-size: -webkit-xxx-large;"></ion-icon><p>Add To Groups</p></ion-col>
+</ion-row>
+<ion-row>
+<ion-col width-50><ion-icon name="ios-trash" color="primary" style="font-size: -webkit-xxx-large;"></ion-icon><p>Delete Contact</p></ion-col>
+<ion-col width-50><ion-icon name="ios-close" color="danger" style="font-size: -webkit-xxx-large;" (click)="FriendBlock()"></ion-icon><p>Block Contact</p></ion-col>
+    
+  </ion-row>
+</ion-grid>
+
+
+
 
 </ion-content>

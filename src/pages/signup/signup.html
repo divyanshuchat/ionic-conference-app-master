@@ -1,29 +1,51 @@
 <ion-header>
 	<ion-navbar>
-		<button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-		<ion-title>Signup</ion-title>
+  		<!-- <button ion-button clear large (click)="goBack()">
+  		<ion-icon name="arrow-back-outline"></ion-icon>
+  		Back
+  		</button> -->
+  		<ion-title>Create Account</ion-title>
 	</ion-navbar>
 </ion-header>
 
 <ion-content class="login-page">
 
-	<div class="logo">
-		<img src="assets/img/appicon.svg" alt="Ionic Logo">
-	</div>
+	
 
-	<form #signupForm="ngForm" novalidate>
+	<!-- NORMAL FORM PREVIOUS <form #signupForm="ngForm" novalidate>
 		<ion-list no-lines>
 			<ion-item>
-				<ion-label stacked color="primary">Username</ion-label>
-				<ion-input [(ngModel)]="signup.username" name="username" type="text" #username="ngModel" required>
+				<ion-label stacked color="primary">First Name</ion-label>
+				<ion-input [(ngModel)]="signup.fname" name="fname" type="text" #fname="ngModel" required>
 				</ion-input>
 			</ion-item>
-			<p ion-text [hidden]="username.valid || submitted == false" color="danger" padding-left>
-				Username is required
+			<p ion-text [hidden]="fname.valid || submitted == false" color="danger" padding-left>
+				First name is required
 			</p>
-
+			<ion-item>
+				<ion-label stacked color="primary">Last Name</ion-label>
+				<ion-input [(ngModel)]="signup.lname" name="lname" type="text" #lname="ngModel" required>
+				</ion-input>
+			</ion-item>
+			<p ion-text [hidden]="lname.valid || submitted == false" color="danger" padding-left>
+				Last name is required
+			</p>
+			<ion-item>
+				<ion-label stacked color="primary">Mobile Number</ion-label>
+				<ion-input [(ngModel)]="signup.mobile" name="mobile" type="text" #mobile="ngModel" required>
+				</ion-input>
+			</ion-item>
+			<p ion-text [hidden]="mobile.valid || submitted == false" color="danger" padding-left>
+				Mobile Number is required
+			</p>
+			<ion-item>
+				<ion-label stacked color="primary">Email Address</ion-label>
+				<ion-input [(ngModel)]="signup.email" name="email" type="text" #email="ngModel" required>
+				</ion-input>
+			</ion-item>
+			<p ion-text [hidden]="mobile.valid || submitted == false" color="danger" padding-left>
+				Email is required
+			</p>
 			<ion-item>
 				<ion-label stacked color="primary">Password</ion-label>
 				<ion-input [(ngModel)]="signup.password" name="password" type="password" #password="ngModel" required>
@@ -32,10 +54,80 @@
 			<p ion-text [hidden]="password.valid || submitted == false" color="danger" padding-left>
 				Password is required
 			</p>
+			<ion-item>
+				<ion-label stacked color="primary">Repeat Password</ion-label>
+				<ion-input [(ngModel)]="signup.rpassword" name="rpassword" type="password" #rpassword="ngModel" required>
+				</ion-input>
+			</ion-item>
+			<p ion-text [hidden]="password.valid || submitted == false" color="danger" padding-left>
+				Password is required
+			</p>
 		</ion-list>
 
 		<div padding>
-			<button ion-button (click)="onSignup(signupForm)" type="submit" block>Create</button>
+			<button ion-button (click)="onSignup(signupForm)" type="submit" block>Register</button>
+		</div>
+	</form> -->
+
+	<form [formGroup]= "userSignupForm" novalidate>
+		<ion-list no-lines>
+			<ion-item>
+				<ion-label stacked color="primary">First Name</ion-label>
+				<ion-input name="fname" type="text" formControlName="fname" required>
+				</ion-input>
+			</ion-item>
+			<p ion-text [hidden]="userSignupForm.controls.fname.valid || submitted == false" color="danger" padding-left>
+				First name is required
+			</p>
+
+			<ion-item>
+				<ion-label stacked color="primary">Last Name</ion-label>
+				<ion-input name="lname" type="text" formControlName="lname" required>
+				</ion-input>
+			</ion-item>
+			<p ion-text [hidden]="userSignupForm.controls.lname.valid || submitted == false" color="danger" padding-left>
+				Last name is required
+			</p>
+
+			<ion-item>
+				<ion-label stacked color="primary">Mobile Number</ion-label>
+				<ion-input name="mobile" type="text" formControlName="mobile" required>
+				</ion-input>
+			</ion-item>
+			<p ion-text [hidden]="userSignupForm.controls.mobile.valid || submitted == false" color="danger" padding-left>
+				Enter 10 digit Mobile Number
+			</p>
+
+			<ion-item>
+				<ion-label stacked color="primary">Email Address</ion-label>
+				<ion-input name="email" type="text" formControlName="email" required>
+				</ion-input>
+			</ion-item>
+			<p ion-text [hidden]="userSignupForm.controls.email.valid || submitted == false" color="danger" padding-left>
+				Email is required
+			</p>
+
+			<ion-item>
+				<ion-label stacked color="primary">Password</ion-label>
+				<ion-input name="password" type="password" formControlName="password" required>
+				</ion-input>
+			</ion-item>
+			<p ion-text [hidden]="userSignupForm.controls.password.valid || submitted == false" color="danger" padding-left>
+				Password must be minimum 6 characters
+			</p>
+			<ion-item>
+				<ion-label stacked color="primary">Repeat Password</ion-label>
+				<ion-input name="rpassword" type="password" formControlName="rpassword"  required>
+				</ion-input>
+			</ion-item>
+			<p ion-text [hidden]="userSignupForm.controls.rpassword.valid || submitted == false" color="danger" padding-left>
+				Confirm Password
+			</p>
+			<p ion-text *ngIf="userSignupForm.hasError('mismatchedPasswords') || userSignupForm.controls.rpassword.valid.touched" color="danger" padding-left>Passwords do not match</p>
+		</ion-list>
+
+		<div padding>
+			<button ion-button (click)="onSignup(userSignupForm)" type="submit" block>Register</button>
 		</div>
 	</form>
 

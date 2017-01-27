@@ -3,54 +3,47 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Speakers</ion-title>
+    <ion-title>Contacts</ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content class="outer-content speaker-list">
-  <ion-card *ngFor="let speaker of speakers" class="speaker-card">
+<ion-content>
+<button ion-button icon-left class="log-b" block style="background-color: #3b5998; margin-top: 13px;">
+  <ion-icon name="logo-facebook" ></ion-icon>
+  Link from Facebook
+</button>
+<ion-grid>
+<ion-row wrap>
+<ion-col width-50>
+<button ion-button icon-left class="log-c">
+  <ion-icon name="ios-phone-portrait-outline"></ion-icon>
+  <p style="font-size: 1.2rem">Phone Contacts</p>
+</button>
+</ion-col>
+<ion-col width-50>
+<button ion-button icon-left class="log-c">
+  <ion-icon name="ios-mail-outline"></ion-icon>
+  <p style="font-size: 1.2rem">Invite Friends</p>
+</button>
+</ion-col>
+</ion-row>
+</ion-grid>
 
-    <ion-card-header>
-      <button ion-item detail-none (click)="goToSpeakerDetail(speaker)">
-        <ion-avatar item-left>
-          <img [src]="speaker.profilePic" alt="Speaker profile pic">
+<div *ngIf="data1 && data1.length > '0'">
+<h3 text-center>My Contacts</h3>
+<ion-grid text-center > 
+<ion-row wrap >
+    <ion-col width-50 *ngFor="let data2 of data1" (click)="goToSpeakerDetail(data2)"><ion-avatar class="speaker-detail">
+          <img [src]="data2.userpic" alt="Speaker profile pic">
         </ion-avatar>
-        {{speaker.name}}
-      </button>
-    </ion-card-header>
+        {{data2.fname}}
+       </ion-col>
+</ion-row>
+</ion-grid>
+</div>
+<div *ngIf="data1 && data1.length == '0'">
+<h3 text-center>No Contacts</h3>
+<p text-center>Import some now.</p>
+</div>
 
-    <ion-card-content class="outer-content">
-      <ion-list>
-        <button ion-item *ngFor="let session of speaker.sessions" (click)="goToSessionDetail(session)">
-          <h3>{{session.name}}</h3>
-        </button>
-
-        <button ion-item (click)="goToSpeakerDetail(speaker)">
-          <h3>About {{speaker.name}}</h3>
-        </button>
-      </ion-list>
-    </ion-card-content>
-
-    <ion-row no-padding>
-      <ion-col>
-        <button ion-button clear small color="primary" icon-left (click)="goToSpeakerTwitter(speaker)">
-          <ion-icon name="logo-twitter"></ion-icon>
-          Tweet
-        </button>
-      </ion-col>
-      <ion-col text-center>
-        <button ion-button clear small color="primary" icon-left (click)="openSpeakerShare(speaker)">
-          <ion-icon name='share-alt'></ion-icon>
-         Share
-        </button>
-      </ion-col>
-      <ion-col text-right>
-        <button ion-button clear small color="primary" icon-left (click)="openContact(speaker)">
-          <ion-icon name='chatboxes'></ion-icon>
-          Contact
-        </button>
-      </ion-col>
-    </ion-row>
-
-  </ion-card>
 </ion-content>

@@ -12,7 +12,30 @@ import { TutorialPage } from '../pages/tutorial/tutorial';
 import { SupportPage } from '../pages/support/support';
 
 import { ConferenceData } from '../providers/conference-data';
+import { SchedulePage } from '../pages/schedule/schedule';
 import { UserData } from '../providers/user-data';
+import { ProfilePage} from '../pages/profile/profile';
+import { GroupsPage} from '../pages/groups/groups';
+import { SettingsPage} from '../pages/settings/settings';
+import { AboutPage } from '../pages/about/about';
+import { ChathistoryPage } from '../pages/chathistory/chathistory';
+import { ChathistorymydoorPage } from '../pages/chathistorymydoor/chathistorymydoor';
+import { ChathistoryknockeddoorPage } from '../pages/chathistoryknockeddoor/chathistoryknockeddoor';
+import { CreategroupPage } from '../pages/creategroup/creategroup';
+import { GroupdetailsPage } from '../pages/groupdetails/groupdetails';
+import { ImportcontactsPage } from '../pages/importcontacts/importcontacts';
+import { LocationsettingsPage } from '../pages/locationsettings/locationsettings';
+import { LocationsettingshomePage } from '../pages/locationsettingshome/locationsettingshome';
+import { LocationsettingsotherPage } from '../pages/locationsettingsother/locationsettingsother';
+import { MapsettingsPage } from '../pages/mapsettings/mapsettings';
+import { MydoorPage } from '../pages/mydoor/mydoor';
+import { MydooroptionsPage } from '../pages/mydooroptions/mydooroptions';
+import { PrivacyoptionsPage } from '../pages/prvacyoptions/privacyoptions';
+import { PushnotificationsPage } from '../pages/pushnotifications/pushnotifications';
+import { SendemailPage } from '../pages/sendemail/sendemail';
+import { SendmessagePage } from '../pages/sendmessage/sendmessage';
+
+import { FormBuilder/*, FormGroup*/, Validators, FormsModule, FormControl } from '@angular/forms';
 
 export interface PageInterface {
   title: string;
@@ -34,20 +57,18 @@ export class ConferenceApp {
   // the left menu only works after login
   // the login page disables the left menu
   appPages: PageInterface[] = [
-    { title: 'Schedule', component: TabsPage, icon: 'calendar' },
-    { title: 'Speakers', component: TabsPage, index: 1, icon: 'contacts' },
-    { title: 'Map', component: TabsPage, index: 2, icon: 'map' },
-    { title: 'About', component: TabsPage, index: 3, icon: 'information-circle' }
+    { title: 'Home', component: TabsPage, icon: 'home' },
+    { title: 'Knock History', component: ChathistoryPage, index: 2, icon: 'ios-chatbubbles'},
+    { title: 'Settings', component: SettingsPage, index: 3, icon: 'settings' }
   ];
   loggedInPages: PageInterface[] = [
-    { title: 'Account', component: AccountPage, icon: 'person' },
-    { title: 'Support', component: SupportPage, icon: 'help' },
-    { title: 'Logout', component: TabsPage, icon: 'log-out', logsOut: true }
+    { title: 'My Account', component: AccountPage, icon: 'person' },
+    { title: 'Logout', component: LoginPage, index: 2, icon: 'log-out', logsOut: true }
   ];
   loggedOutPages: PageInterface[] = [
     { title: 'Login', component: LoginPage, icon: 'log-in' },
-    { title: 'Support', component: SupportPage, icon: 'help' },
-    { title: 'Signup', component: SignupPage, icon: 'person-add' }
+    { title: 'Signup', component: SignupPage, index: 2, icon: 'person-add' },
+    //{ title: 'Profile', component: ProfilePage, icon: 'person' }
   ];
   rootPage: any;
 
@@ -57,14 +78,15 @@ export class ConferenceApp {
     public menu: MenuController,
     public platform: Platform,
     public confData: ConferenceData,
-    public storage: Storage
+    public storage: Storage,
+    /*public control: FormControl*/
   ) {
 
     // Check if the user has already seen the tutorial
     this.storage.get('hasSeenTutorial')
       .then((hasSeenTutorial) => {
         if (hasSeenTutorial) {
-          this.rootPage = TabsPage;
+          this.rootPage = LoginPage;
         } else {
           this.rootPage = TutorialPage;
         }

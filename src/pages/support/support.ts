@@ -20,11 +20,11 @@ export class SupportPage {
   }
 
   ionViewDidEnter() {
-    let toast = this.toastCtrl.create({
-      message: 'This does not actually send a support request.',
-      duration: 3000
-    });
-    toast.present();
+    // let toast = this.toastCtrl.create({
+    //   message: 'This does not actually send a support request.',
+    //   duration: 3000
+    // });
+    // toast.present();
   }
 
   submit(form) {

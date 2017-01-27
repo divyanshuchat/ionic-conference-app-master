@@ -2,8 +2,24 @@
 .speaker-detail img {
   max-width: 140px;
   border-radius: 50%;
+
 }
 
 .speaker-detail p {
   color: #60646B;
+}
+
+.speakerprofile {
+  max-width: 140px;
+  border-radius: 50% !important;
+  
+}
+
+.profile {
+margin-left: -20px;
+margin-right: -20px;
+margin-top: -16px;
+background-color:#34BFCC;
+padding-top: 10px;
+padding-bottom: 10px;
 }
